@@ -2,7 +2,7 @@
   <mat-card-title>
     <h3><mat-icon>assignment</mat-icon> Tickets</h3>
   </mat-card-title>
-  <mat-card-content *ngIf="isready">
+  <mat-card-content *ngIf="isready && nvista == 0">
     <div class="content-tasks">
       <h4 style="text-align: left;"> <mat-icon>dns</mat-icon> Tickets <span style="float: right; cursor: pointer;"><mat-icon>sync</mat-icon></span></h4>
       <ol>
@@ -39,28 +39,23 @@
                     <p>{{ticketSelected.position}}</p>
                   </div>
                   <div class="task-action">
-
                       <div class="action-btn-wrapper">
                         <div class="fixed-action-btn my-custom-btn horizontal">
-                          <button id="float-btn" mat-icon-button>
+                          <button mat-icon-button id="float-btn">
                             <mat-icon>more_horiz</mat-icon>
-                          </button>
+                            </button>
                           <ul id="float-menu">
-                            <li><a class="btn-floating green">
+                            <li><a>
                               <button mat-icon-button>
                                 <mat-icon>add_alarm</mat-icon>
                               </button>
                             </a></li>
-                              <li><a class="btn-floating">
-                                <button mat-icon-button>
+                              <li><a  (click)="resolution()">
+                                <button mat-icon-button (click)="resolution()">
                                   <mat-icon>check</mat-icon>
                                 </button>
                               </a></li>
-
                           </ul>
-
-
-
                       </div>
                       </div>
                   </div>
@@ -91,7 +86,42 @@
       </div>
     </div>
     <div class="content-documents">
-      <h4  style="text-align: left;"> <mat-icon> attach_file</mat-icon> Document</h4>
+      <h4  style="text-align: left;"> <mat-icon> attach_file</mat-icon> Contact</h4>
     </div>
   </mat-card-content>
+
+<div *ngIf="nvista == 1">
+  <mat-card-content>
+    <div fxLayout="row" class="row">
+
+      <div class="custom">
+          <div class="custom-img">
+            <img class="user-image" src="{{ticketSelected.profile}}">
+          </div>
+          <div class="custom-info">
+            <p><strong>{{ticketSelected.customer}}</strong> </p>
+            <p>{{ticketSelected.position}}</p>
+          </div>
+          <p><strong>Subject :</strong> {{ticketSelected.subject}}</p>
+        </div>
+       <div class="row" style="border-top:1px solid #799ecc;">
+        <div style="margin-top: 2vh;">
+          <angular-editor  [config]="editorConfig"></angular-editor>
+        </div>
+       </div>
+       <div fxLayout="column" class="row">
+         <br>
+        <div class="row">
+          <button style="border: 1px solid #c0c0c0;" type="button" (click)="fileUpload.click()" mat-button> <mat-icon> attach_file </mat-icon> Add file</button>
+          <input #fileUpload  style="display: none;" id="fileUpload" name="fileUpload" multiple="multiple"  type='file'>
+        </div>
+      </div>
+     
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="btn btn-primary mr-1" mat-raised-button color="primary">Save</button>
+    <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onBack()">Cancel</button>
+  </mat-card-actions>
+</div>
 </mat-card>
