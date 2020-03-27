@@ -1,1 +1,105 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$taskManager-primary: mat-palette($mat-indigo);
+$taskManager-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$taskManager-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$taskManager-theme: mat-light-theme(
+  $taskManager-primary,
+  $taskManager-accent,
+  $taskManager-warn
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($taskManager-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+$primary: #28a624;
+$second: #248c20;
+$third: #59a656;
+$fourth: #f0bc3a;
+$fifth: #21215a;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-size: 14px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #121c37;
+}
+
+.user-image {
+  max-height: 2.5rem;
+  border-radius: 50%;
+}
+
+.mat-icon {
+  color: $fourth;
+}
+
+.mat-card {
+  color: #121c37 !important;
+}
+
+.mat-table {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 1px solid #dee2ea;
+  .mat-cell {
+    font-size: 13px;
+  }
+  .mat-header-cell {
+    font-size: 1.05em;
+    color:#121c37;
+    background-color: #fafafa;
+  }
+  .mat-icon {
+    font-size: 20px;
+  }
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  color:#121c37;
+}
+.mat-paginator-page-size-label {
+  margin: 0 4px;
+  font-size: 13px;
+}
+.mat-paginator-range-label {
+  margin: 0 32px 0 24px;
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 98%;
+  flex: 1;
+  padding: 0 2vh 0 2vh;
+}

@@ -1,0 +1,44 @@
+
+.header {
+  flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+    background-color: #ffffff;
+    color:#121C37;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.px-1 {
+  padding-left: .25rem;
+    padding-right: .25rem;
+}
+
+.user-name{
+  padding: 0.5rem;
+}
+
+
+.tool {
+    z-index: 10;
+    position: absolute;
+    padding: 0.15rem;
+    background-color: #ffffff;
+    visibility: hidden;
+
+    .mat-icon {
+      font-size: 30px;
+      width: 30px !important;
+      height: 30px !important;
+    }
+
+}
+

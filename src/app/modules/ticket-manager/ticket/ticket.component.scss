@@ -1,0 +1,19 @@
+.listFile {
+  list-style: none;
+  display: inline-flex;
+   li {
+     display: grid;
+     width: 15vh;
+     label {
+       font-size: 12px;
+       color:#1a254e;
+     }
+   }
+}
+
+.hidden {
+  display: none;
+}
+.show {
+  display: block;
+}

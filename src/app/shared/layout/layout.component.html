@@ -1,0 +1,20 @@
+<mat-sidenav-container fxLayout="column" style="height: 100%;">
+    <mat-sidenav  mode="side" [opened]="true">
+       <app-aside></app-aside>
+    </mat-sidenav>
+
+  <mat-sidenav-content >
+        <app-header>
+        </app-header>
+
+        <main fxFlex style="padding: 2.2vh;">
+          <router-outlet></router-outlet>
+        </main>
+
+
+        <footer>
+          <small>Derechos reservados lalo@Gmail.com</small>
+        </footer>
+      </mat-sidenav-content>
+
+</mat-sidenav-container>

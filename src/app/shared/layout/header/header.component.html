@@ -1,0 +1,31 @@
+<mat-toolbar   class="header" fxLayout="row" fxLayoutAlign="center end" style="border-bottom: 1px solid #d6e0f0;">
+  <div fxFlex="25%">
+
+  </div>
+
+  <span   fxflex="" style="flex: 1 1 0%; box-sizing: border-box;"></span>
+  <div class="items-center flex">
+
+      <div class="px-1">
+          <button mat-icon-button >
+            <mat-icon>notification_important</mat-icon>
+            </button>
+      </div>
+      <div class="px-1">
+          <div [matMenuTriggerFor]="menu" fxLayout="row" fxLayoutAlign="end center" style="display: flex;  flex-direction: row;">
+              <div   class="user-name" fxhide.xs="">Eduardo Mercado</div>
+              <div  fxlayout="row" fxlayoutalign="center center" style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center; align-items: center;">
+                    <img  class="user-image" src="../assets/img/man-avatar.png">
+              </div>
+          </div>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item> Mí Perfil
+                <mat-icon>account_box</mat-icon>
+              </button>
+              <button mat-menu-item> Salir
+                <mat-icon>exit_to_app</mat-icon>
+              </button>
+            </mat-menu>
+      </div>
+  </div>
+  </mat-toolbar>

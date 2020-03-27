@@ -1,0 +1,155 @@
+<!-- <mat-card  *ngIf="isready && nVista == 0"> -->
+  <mat-card [className]="(nVista != 0)? 'hidden': 'show'">
+  <mat-card-header>
+
+  </mat-card-header>
+  <mat-card-content>
+    <div  style="display: flex; justify-content: space-between;">
+      <div>
+        <button   mat-raised-button color="primary"  (click)="add('companyForm')">Add Ticket</button>
+      </div>
+
+      <mat-form-field  fxFlex="40%" fxFlexAlign="end" class="searchForm">
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter" autocomplete="off">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="source" matSort width="100%">
+       <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
+        <td mat-cell *matCellDef="let element"> {{element.company}} </td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> customer </th>
+        <td mat-cell *matCellDef="let element"> {{element.customer}} </td>
+      </ng-container>
+      <ng-container matColumnDef="businessAgent">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Business Agent </th>
+        <td mat-cell *matCellDef="let element"> {{element.businessAgent}} </td>
+      </ng-container>
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>breve subject </th>
+        <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+      </ng-container>
+      <ng-container matColumnDef="statusTask">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Current Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.statusTask}} </td>
+      </ng-container>
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority </th>
+        <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+      </ng-container>
+      <ng-container matColumnDef="idTicket">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 22vh;"> Action </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+        <button mat-icon-button>
+          <mat-icon class="edit" (click)="edit( element.idTicket)">create</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon class="delete" (click)="delete(element.idTicket, i)">delete_forever</mat-icon>
+        </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="Columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: Columns;"></tr>
+    </table>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+  </mat-card>
+
+  <mat-card [className]="(nVista == 1)? 'show': 'hidden'">
+    <mat-card-header>
+      <h3 class="card-header">{{action}}</h3>
+    </mat-card-header>
+
+    <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <div fxLayout="row" class="row">
+          <div class="column">
+            <mat-form-field>
+              <mat-select (selectionChange) = "filterCustomer($event.value)" placeholder="Select Company">
+                <mat-option *ngFor="let item of listCompany" [value]="item.id">{{item.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field>
+              <mat-select formControlName="idCustomer" placeholder="Select Customer">
+                <mat-option *ngFor="let item of listCustomer" [value]="item.id">{{item.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row" class="row">
+          <div class="column">
+            <mat-form-field>
+              <mat-select formControlName="idPriority" placeholder="Select Priority">
+                <mat-option *ngFor="let item of listPriority" [value]="item.id">{{item.value}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="ticketForm.controls.idPriority.hasError('idPriority') && !ticketForm.hasError('required')">
+                Priority error
+             </mat-error>
+             <mat-error *ngIf="submitted && ticketForm.controls.idPriority.errors" class="invalid-feedback">
+                Priority is <strong>required</strong>
+             </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field>
+              <mat-select formControlName="idAgent" placeholder="Select Business Agent">
+                <mat-option *ngFor="let item of listAgent" [value]="item.id">{{item.value}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="ticketForm.controls.idAgent.hasError('idAgent') && !ticketForm.hasError('required')">
+                Business Agent error
+             </mat-error>
+             <mat-error *ngIf="submitted && ticketForm.controls.idAgent.errors" class="invalid-feedback">
+              Business Agent is <strong>required</strong>
+             </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="column" class="row">
+          <mat-form-field class="column">
+            <input matInput placeholder="Subject" [formControl]="ticketForm.controls.subject">
+            <mat-error *ngIf="ticketForm.controls.subject.hasError('subject') && !ticketForm.hasError('required')">
+                Subject error
+            </mat-error>
+            <mat-error *ngIf="submitted && ticketForm.controls.subject.errors" class="invalid-feedback">
+                Subject is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" class="row">
+          <mat-form-field class="column" >
+            <input style="display: none;" matInput  [formControl]="ticketForm.controls.subject">
+            <angular-editor [formControl]="ticketForm.controls.body" [config]="editorConfig"></angular-editor>
+            <mat-error *ngIf="ticketForm.controls.body.hasError('body') && !ticketForm.hasError('required')">
+              Body error
+            </mat-error>
+            <mat-error *ngIf="submitted && ticketForm.controls.body.errors" class="invalid-feedback">
+              Body is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" class="row">
+          <div class="row">
+            <button style="border: 1px solid #c0c0c0;" type="button" (click)="fileUpload.click()" mat-button> <mat-icon> attach_file </mat-icon> Add file</button>
+            <input #fileUpload  style="display: none;" id="fileUpload" name="fileUpload" multiple="multiple"  type='file' (change)="onSelectFile($event)">
+          </div>
+          <ul class="listFile">
+            <li *ngFor="let file of files">
+              <!--<mat-progress-bar [value]="file.progress"></mat-progress-bar>  -->
+              <img [src]="file.img" height="50">
+              <span id="file-label">{{file.name}} </span>
+            </li>
+        </ul>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="btn btn-primary mr-1" mat-raised-button color="primary">Register</button>
+        <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onReset()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>

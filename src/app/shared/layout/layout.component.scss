@@ -1,0 +1,24 @@
+$primary: #28a624;
+$second:#0b1131;
+$third:#59a656;
+
+
+.mat-sidenav {
+  background-color:$second;
+  color: #eeeeee;
+}
+
+footer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    position: fixed;
+    bottom: 1px;
+    width: 100%;
+    background-color: #eef6fb;
+    border-top: 1px solid #b0c6e6a8;
+    color: #12318a;
+    small{
+      margin-left: 2vh;
+    }
+}

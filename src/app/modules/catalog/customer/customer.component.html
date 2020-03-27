@@ -1,0 +1,159 @@
+<mat-card *ngIf="nVista == 0">
+  <mat-card-header>
+
+  </mat-card-header>
+  <mat-card-content>
+    <div  style="display: flex; justify-content: space-between;">
+      <div>
+        <button   mat-raised-button color="primary"  (click)="add()">Agregar Item</button>
+      </div>
+
+      <mat-form-field  fxFlex="40%" fxFlexAlign="end" class="searchForm">
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro" autocomplete="off">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]='source' matSort width="100%">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef='company'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
+        <td mat-cell *matCellDef="let element">{{element.company}}</td>
+      </ng-container>
+      <ng-container matColumnDef='position'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+        <td mat-cell *matCellDef="let element">{{element.position}}</td>
+      </ng-container>
+      <ng-container matColumnDef='email'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+      </ng-container>
+      <ng-container matColumnDef='skype'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> User Skype </th>
+        <td mat-cell *matCellDef="let element">{{element.skype}}</td>
+      </ng-container>
+      <ng-container matColumnDef='phone'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone Number </th>
+        <td mat-cell *matCellDef="let element">{{element.phone}}</td>
+      </ng-container>
+      <ng-container matColumnDef='idCustomer'>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 22vh;"> Action </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button mat-icon-button>
+            <mat-icon class="edit" (click)="edit(element.idCustomer)">create</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon class="delete" (click)="delete(element.idCustomer, i)">delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="Columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: Columns;"></tr>
+    </table>
+    <mat-paginator [pageSize]="2" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="nVista == 1">
+  <mat-card-header>
+    <h3 class="card-header">{{actionCustomer}}</h3>
+  </mat-card-header>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+      <div fxLayout="column" class="row">
+        <div class="column" (click)="file.click()">
+          <div class="contenedorImg">
+            <legend>click to upload image</legend>
+            <img class="img-profile" [src]="customerRecord.photo"> <br/>
+            <input id="imgProfile" style="display: none;" type='file' (change)="onSelectFile($event)" #file accept="image/x-png,image/gif,image/jpeg">
+            <mat-error *ngIf="submitted && customerForm.controls.photo.errors" class="invalid-feedback">
+              Profile photo is <strong>required</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="column">
+
+        <mat-form-field fxFlex>
+          <mat-select formControlName="idCompany" placeholder="Company">
+            <mat-option *ngFor="let item of listCompany" [value]="item.id">
+              {{ item.value }}
+            </mat-option>
+          </mat-select>
+            <mat-error *ngIf="customerForm.controls.idCompany.hasError('name') && !customerForm.hasError('required')">
+               Company error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.idCompany.errors" class="invalid-feedback">
+                Company is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+<!--
+      <div fxLayout="column" class="row"> -->
+        <mat-form-field fxFlex>
+            <input matInput placeholder="Full Name" [formControl]="customerForm.controls.name">
+            <mat-error *ngIf="customerForm.controls.name.hasError('name') && !customerForm.hasError('required')">
+                Full name error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.name.errors" class="invalid-feedback">
+                Full Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <!-- </div> -->
+
+      <!-- <div fxLayout="column" class="row"> -->
+        <mat-form-field fxFlex>
+            <input matInput placeholder="Position" [formControl]="customerForm.controls.position">
+            <mat-error *ngIf="customerForm.controls.position.hasError('position') && !customerForm.hasError('required')">
+               Position error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.position.errors" class="invalid-feedback">
+                Position is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <!-- </div> -->
+
+      <!-- <div fxLayout="column" class="row"> -->
+        <mat-form-field fxFlex>
+            <input matInput placeholder="E-mail" [formControl]="customerForm.controls.email">
+            <mat-error *ngIf="customerForm.controls.email.hasError('email') && !customerForm.hasError('required')">
+               Email error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.email.errors" class="invalid-feedback">
+                Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <!-- </div> -->
+      <!-- <div fxLayout="column" class="row"> -->
+        <mat-form-field fxFlex>
+            <input matInput placeholder="User Skype" [formControl]="customerForm.controls.skype">
+            <mat-error *ngIf="customerForm.controls.skype.hasError('skype') && !customerForm.hasError('required')">
+               User Skype error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.skype.errors" class="invalid-feedback">
+                User Skype is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <!-- </div> -->
+      <!-- <div fxLayout="column" class="row"> -->
+        <mat-form-field fxFlex>
+            <input matInput placeholder="Phone Number" [formControl]="customerForm.controls.phone">
+            <mat-error *ngIf="customerForm.controls.phone.hasError('phone') && !customerForm.hasError('required')">
+               Phone number error
+            </mat-error>
+            <mat-error *ngIf="submitted && customerForm.controls.phone.errors" class="invalid-feedback">
+                Phone number is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <!-- </div> -->
+    </div>
+    </div>
+    </mat-card-content>
+          <mat-card-actions fxlayout="row" fxlayoutalign="end center" fxlayoutgap="8px">
+              <button class="btn btn-primary mr-1" mat-raised-button color="primary">Register</button>
+              <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onReset()">Cancel</button>
+          </mat-card-actions>
+        </form>
+
+</mat-card>

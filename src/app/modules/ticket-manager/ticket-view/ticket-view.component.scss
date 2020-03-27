@@ -1,0 +1,144 @@
+.mat-card-content { display: flex;}
+.content-tasks{
+  width: 25%;
+  border-right: 0.1vh solid rgba(0,0,0,0.07);
+  h4 { text-align: center; border-bottom: 1px solid #e0e0e0;}
+}
+
+.content-details {
+  width: 50%;
+  border-right: 0.1vh solid rgba(0,0,0,0.07);
+  h4 { text-align: center; border-bottom: 1px solid #e0e0e0;}
+}
+
+.content-documents{
+  width: 25%;
+  h4 { text-align: center; border-bottom: 1px solid #e0e0e0;}
+}
+
+.custom {
+  margin-bottom: 15px;
+  .custom-img{
+    display: table-cell;
+    vertical-align: top;
+  }
+  .custom-info{
+    display: table-cell;
+    vertical-align: top;
+    p{padding: 0vh 0.2vh 0vh 1.2vh; margin: 1.2vh;}
+  }
+}
+
+blockquote {
+  border-left: 3px solid rgba(0,0,0,0.2);
+  position: relative;
+  text-indent: 3ex;
+  margin: 0 0 20px;
+
+}
+
+.block-red {
+  border-right: 4px solid #9b0d0d;
+    background-color: hsl(213, 36%, 95%);
+    padding: 7px;
+    margin-bottom: 5px;
+}
+
+.block-orange {
+  border-right: 4px solid #dfa915;
+    background-color: #eef2f7;
+    padding: 7px;
+    margin-bottom: 5px;
+}
+
+.block-green {
+  border-right: 4px solid #0f6c29;
+    background-color: #eef2f7;
+    padding: 7px;
+    margin-bottom: 5px;
+}
+
+.block-selected {
+  background-color: #195daf !important;
+  color: #f5ffcc;
+}
+
+ol{ list-style: none; padding: 0;}
+
+.task-info{
+  padding: 1.2vh;
+  .custom{ margin: 0; display: flex;}
+  .custom-info { width: 86%; }
+}
+
+.task-document {
+  list-style: none;
+  display: flex;
+   li{
+      padding: 4px;
+      color: #5a6d92;
+      border: 1px solid #b8d2f9;
+      border-radius: 12px;
+      margin-left: 1vh;
+     a {
+       color:#254473;
+        .mat-icon {font-size: 16px;}
+     }
+   }
+}
+
+.listFile {
+  list-style: none;
+  display: inline-flex;
+   li {
+     display: grid;
+     width: 15vh;
+     label {
+       font-size: 12px;
+       color:#1a254e;
+     }
+   }
+}
+
+.action-btn-wrapper {
+  position: relative;
+  display: flex;
+  li {
+    list-style: none;
+    display: table-cell;
+    padding: 0 1vh 0 1vh;
+  }
+}
+
+.fixed-action-btn.my-custom-btn {
+    display: inline-flex;
+}
+
+#float-menu {
+ visibility: hidden;
+ right: 6vh;
+ position: absolute;
+ top: -2vh;
+}
+
+#float-btn:focus + #float-menu {
+   visibility: visible ;
+}
+
+.btn-floating {
+  display: inline-block;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  background-color: #01188f;
+  border-radius: 50%;
+  transition: .35s;
+  cursor: pointer;
+  vertical-align: middle;
+
+}

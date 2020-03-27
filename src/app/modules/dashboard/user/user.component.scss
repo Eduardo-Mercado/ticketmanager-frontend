@@ -1,0 +1,105 @@
+
+.row{
+width: 100%;
+display: flex;
+}
+
+.cell1{
+  width: 32%;
+}
+
+.vistaMes {
+  width: 100%;
+  display: inline-flex;
+  border-right: 2px solid #2f5cc4;
+    .nota {
+      position: relative;
+      width: 40%;
+      .nota-encabezado {
+        padding-top: 1.2rem;
+        p{
+          color: white;
+          font-weight: 300;
+          font-size: 2rem;
+          text-align: center;
+          border: 1px solid #2f5cc4;
+          border-radius: 8px;
+          width: min-content;
+          margin: 0 auto;
+          padding: 0.4rem;
+        }
+        span {
+          color: white;
+          font-weight: 300;
+          font-size: 2rem;
+          text-align: center;
+          border-radius: 8px;
+          width: min-content;
+          margin: 0 auto;
+          display: block;
+        }
+      }
+    }
+    .mes{
+      width: 60%;
+      background-color: white;
+      position: relative;
+      div {
+        width: 100%;
+        display: inline-flex;
+      }
+      p{
+
+        font-weight: 300;
+        font-size: 2rem;
+        text-align: center;
+        width: -moz-min-content;
+        margin: 0 auto;
+        display: block;
+      }
+      table {
+        margin-top: 1.2rem;
+        padding: 1.2rem;
+         th {
+           font-weight: 400;
+           padding-bottom: 1rem;
+         }
+         td {
+          text-align: center;
+          width: 2rem;
+          height: 2rem;
+          color: #34354f;
+          font-size: 16px;
+          padding: 0.8rem;
+          .event {
+            border: 1px solid #24a3da;
+            background-color: #1a4e6e;
+            color: #ffffff;
+            border-radius: 50% !important;
+            display: initial;
+            padding: 0.7rem;
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+           }
+
+           .current {
+            border: 1px solid #f1e7a7;
+            background-color: #f0bc3a;
+            color: #ffffff;
+            border-radius: 50% !important;
+            display: initial;
+            padding: 0.7rem;
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+           }
+         }
+
+
+         .outMonth {
+           color:#c4bebe;
+         }
+      }
+    }
+}
+
+.agenda {
+  padding-left: 2.2vh;
+}

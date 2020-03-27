@@ -1,0 +1,61 @@
+<mat-toolbar  class="header">
+    <!-- <img src="assets/img/logo.jpg" id="logoSistema" width=40> -->
+    <h4>Ticket Manager</h4>
+</mat-toolbar>
+
+<div class="Cntavatar">
+    <div class="avatar">
+      <div  fxlayout="row" fxlayoutalign="center center" style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center; align-items: center;">
+        <img  class="user-image" src="../assets/img/man-avatar.png">
+  </div>
+    </div>
+    <p>Eduardo Mercado</p>
+    <small>eduardo.mercado@juegaok.com</small>
+    <small>Analista-Programador</small>
+</div>
+
+<div class="menu">
+  <ul>
+    <li>
+    <a>
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+    </a>
+  </li>
+  <li>
+    <span class="title"> Seguridad</span>
+  </li>
+   <li> <a>
+        <mat-icon>lock</mat-icon>
+        <span>Usuario</span>
+    </a>
+  </li>
+  <li>
+    <a>
+        <mat-icon>lock</mat-icon>
+        <span>Roles</span>
+    </a>
+  </li>
+  <li>
+    <a routerLink="/Seguridad">
+        <mat-icon>lock</mat-icon>
+        <span>Opciones</span>
+    </a>
+  </li>
+  <li>
+    <span class="title"> Menu</span>
+  </li>
+  <li  *ngFor="let item of options let i = index" (click)="getItemSelected(i)"  class="{{item.nameCssClass}}">
+      <a routerLink="{{item.path}}" >
+        <mat-icon>{{item.icon}}</mat-icon>
+        <span>{{item.name}}</span>
+      </a>
+  </li>
+  </ul>
+</div>
+
+<div class="chat-container">
+  <button mat-icon-button >
+    <mat-icon>announcement</mat-icon>
+    </button>
+</div>

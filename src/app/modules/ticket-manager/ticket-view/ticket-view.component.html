@@ -1,0 +1,97 @@
+<mat-card>
+  <mat-card-title>
+    <h3><mat-icon>assignment</mat-icon> Tickets</h3>
+  </mat-card-title>
+  <mat-card-content *ngIf="isready">
+    <div class="content-tasks">
+      <h4 style="text-align: left;"> <mat-icon>dns</mat-icon> Tickets <span style="float: right; cursor: pointer;"><mat-icon>sync</mat-icon></span></h4>
+      <ol>
+        <li *ngFor="let item of listTickets  let i = index" (click)="getInformationTicket(i)">
+          <div class="{{item.cssClass}}">
+                <div class="custom">
+                    <div class="custom-img">
+                      <img class="user-image" src="{{item.profile}}">
+                    </div>
+                    <div class="custom-info">
+                      <p><strong>{{item.customer}}</strong>  <br> {{item.company}} - {{item.position}} <br> <small>{{item.dateT | date:'medium'}}</small></p>
+
+                    </div>
+                </div>
+                <blockquote>
+               {{item.subject}}
+                </blockquote>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+    <div class="content-details">
+      <h4 style="text-align: left;"> <mat-icon>receipt</mat-icon> Detail</h4>
+
+      <div class="task-info"  *ngIf="showDetail">
+          <div class="task-userInfo">
+              <div class="custom">
+                  <div class="custom-img">
+                    <img class="user-image" src="{{ticketSelected.profile}}">
+                  </div>
+                  <div class="custom-info">
+                    <p><strong>{{ticketSelected.customer}}</strong> </p>
+                    <p>{{ticketSelected.position}}</p>
+                  </div>
+                  <div class="task-action">
+
+                      <div class="action-btn-wrapper">
+                        <div class="fixed-action-btn my-custom-btn horizontal">
+                          <button id="float-btn" mat-icon-button>
+                            <mat-icon>more_horiz</mat-icon>
+                          </button>
+                          <ul id="float-menu">
+                            <li><a class="btn-floating green">
+                              <button mat-icon-button>
+                                <mat-icon>add_alarm</mat-icon>
+                              </button>
+                            </a></li>
+                              <li><a class="btn-floating">
+                                <button mat-icon-button>
+                                  <mat-icon>check</mat-icon>
+                                </button>
+                              </a></li>
+
+                          </ul>
+
+
+
+                      </div>
+                      </div>
+                  </div>
+              </div>
+              <label><strong>Subject :</strong></label>
+              <p>{{ticketSelected.subject}}</p>
+          </div>
+          <hr>
+          <div class="task-info">
+           <div [innerHTML]="ticketSelected.body"></div>
+          </div>
+
+          <div style="background-color: #f1f6fbc7; border-radius: 5px;"  *ngIf="(listFiles.length > 0)">
+            <h5 style="display: flex;">
+              <mat-icon> attach_file</mat-icon>
+              <span style="margin-top: 0.5vh;">  Attachment</span>
+            </h5>
+            <ul class="listFile">
+              <li *ngFor="let file of listFiles">
+                <img [src]="file.img" height="50">
+                <span id="file-label">{{file.name}} </span>
+              </li>
+            </ul>
+          </div>
+      </div>
+      <div class="task-info"*ngIf="!showDetail">
+        <h5>nothing selected yet...</h5>
+      </div>
+    </div>
+    <div class="content-documents">
+      <h4  style="text-align: left;"> <mat-icon> attach_file</mat-icon> Document</h4>
+    </div>
+  </mat-card-content>
+</mat-card>
