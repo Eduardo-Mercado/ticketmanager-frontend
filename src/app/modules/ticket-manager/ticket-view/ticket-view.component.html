@@ -87,6 +87,24 @@
     </div>
     <div class="content-documents">
       <h4  style="text-align: left;"> <mat-icon> attach_file</mat-icon> Contact</h4>
+
+      <div class="task-info"  *ngIf="showDetail">
+        <div class="task-userInfo">
+            <div >
+                <div style="display: inline-flex;width: 100%;">
+                  <img style="max-width: 24vh;max-height: 24vh;margin: 0 auto;" class="user-image" src="{{ticketSelected.profile}}">
+                </div>
+                <div class="custom-info">
+                  <p><strong>{{ticketSelected.customer}}</strong> </p>
+                  <p>{{ticketSelected.position}}</p>
+                  <p><mat-icon> mail_outline</mat-icon> usermail@company.com</p>
+                  <p><mat-icon>language</mat-icon> userskype</p>
+                  <p><mat-icon> phone</mat-icon> 505 - 99999999</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
     </div>
   </mat-card-content>
 
@@ -94,7 +112,7 @@
   <mat-card-content>
     <div fxLayout="row" class="row">
 
-      <div class="custom">
+      <div class="custom column">
           <div class="custom-img">
             <img class="user-image" src="{{ticketSelected.profile}}">
           </div>
@@ -103,6 +121,20 @@
             <p>{{ticketSelected.position}}</p>
           </div>
           <p><strong>Subject :</strong> {{ticketSelected.subject}}</p>
+
+        </div>
+        <div class="column">
+          <mat-form-field>
+            <input matInput [owlDateTime]="dt1"   [owlDateTimeTrigger]="dt1" placeholder="Date Time Init">
+            <owl-date-time  #dt1></owl-date-time>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [owlDateTime]="dt2"   [owlDateTimeTrigger]="dt2" placeholder="Date Time Finish">
+            <owl-date-time  #dt2></owl-date-time>
+          </mat-form-field>
+          <mat-form-field >
+            <textarea matInput rows="3" placeholder="Comment"></textarea>
+          </mat-form-field>
         </div>
        <div class="row" style="border-top:1px solid #799ecc;">
         <div style="margin-top: 2vh;">
@@ -110,13 +142,20 @@
         </div>
        </div>
        <div fxLayout="column" class="row">
-         <br>
-        <div class="row">
+        <div class="row" style="margin-top:2vh;">
+
           <button style="border: 1px solid #c0c0c0;" type="button" (click)="fileUpload.click()" mat-button> <mat-icon> attach_file </mat-icon> Add file</button>
-          <input #fileUpload  style="display: none;" id="fileUpload" name="fileUpload" multiple="multiple"  type='file'>
+          <input #fileUpload  style="display: none;" id="fileUpload" name="fileUpload" multiple="multiple"  type='file' (change)="onSelectFile($event)">
         </div>
+        <ul class="listFile">
+          <li *ngFor="let file of files">
+            <!--<mat-progress-bar [value]="file.progress"></mat-progress-bar>  -->
+            <img [src]="file.img" height="50">
+            <span id="file-label">{{file.name}} </span>
+          </li>
+        </ul>
       </div>
-     
+
     </div>
   </mat-card-content>
   <mat-card-actions>

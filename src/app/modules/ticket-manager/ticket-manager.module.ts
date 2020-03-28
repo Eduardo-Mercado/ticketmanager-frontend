@@ -7,6 +7,7 @@ import { TicketViewComponent } from './ticket-view/ticket-view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TicketComponent } from './ticket/ticket.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [TicketComponent, TicketViewComponent],
@@ -16,7 +17,9 @@ import { TicketComponent } from './ticket/ticket.component';
     AngularMaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ]
 })
 export class TicketManagerModule { }
