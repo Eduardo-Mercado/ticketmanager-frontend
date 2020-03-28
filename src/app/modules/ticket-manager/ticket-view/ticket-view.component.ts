@@ -17,6 +17,7 @@ export class TicketViewComponent implements OnInit {
   isready = false;
   showDetail: boolean;
   nvista: number;
+  files: TicketFile[] = [];
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -121,5 +122,31 @@ export class TicketViewComponent implements OnInit {
   }
   onBack() {
     this.nvista = 0;
+  }
+
+  public onSelectFile(event) {
+    const filesAmount = event.target.files.length;
+
+    for (let i = 0; i < filesAmount; i++) {
+                const reader = new FileReader();
+              //
+              // event.target.result
+                const temp = new TicketFile();
+                temp.type = event.target.files[i].type;
+                temp.name = event.target.files[i].name;
+                temp.UploadFile = event.target.files[i];
+
+                temp.img = new IconFile().getIconForTypeFile(temp.type);
+                if (temp.img === '-1') {
+
+                  reader.readAsDataURL(event.target.files[i]);
+                  reader.onload = ( event : any) => {
+                    temp.img =  event.target.result;
+                  };
+
+                }
+
+                this.files.push( temp );
+        }
   }
 }
