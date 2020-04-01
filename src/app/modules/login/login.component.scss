@@ -1,0 +1,55 @@
+
+.col1 {
+  position: relative;
+  width: 60%;
+  height: 99%;
+   img {
+    position: absolute;
+    top: 18vh;
+    left: 13vh;
+   }
+}
+
+.col2 {
+  position: relative;
+  width: 35%;
+  top: 31vh;
+  .title {
+    img {
+      width: 3vh;
+      padding-right: 1vh;
+    }
+
+    h1 {
+      display: contents;
+      padding-left: 2vh;
+    }
+  }
+  form {
+    width: 50vh;
+    button {
+      margin-right: 3vh;
+    }
+    .action {
+      a {
+        float: right;
+        color: #604192;
+        font-size: 14px;
+        font-weight: bolder;
+      }
+      margin-top: 2vh;
+      margin-left: 2vh;
+    }
+  }
+}
+
+footer {
+  position: absolute;
+    bottom: 1px;
+    background: #070a27;
+    color: #fff;
+    width: 100%;
+    p {
+      padding-left: 5vh;
+    }
+}

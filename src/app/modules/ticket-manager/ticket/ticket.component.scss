@@ -17,3 +17,26 @@
 .show {
   display: block;
 }
+
+span.lbPriority {
+    border-radius: 3px;
+    display: block;
+    padding: .2em .6em .3em;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    width: 10vh;
+}
+
+.Baja {
+  background-color: #0f6c29; //
+}
+
+.Alta {
+  background-color: #d02d2d;
+}
+
+.Media {
+  background-color: #dfa915;
+}

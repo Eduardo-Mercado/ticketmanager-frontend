@@ -5,4 +5,5 @@ export class BusinessAgent {
   email: string;
   skype: string;
   phone: string;
+  photo: string;
 }

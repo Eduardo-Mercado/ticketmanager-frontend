@@ -31,12 +31,14 @@ export class BusinessAgentComponent implements OnInit {
     this.isready = false;
     this.nVista = 0;
     this.agentRecord = new BusinessAgent();
+    this.agentRecord.photo = '';
     this.agentForm = this.formBuilder.group({
       name: ['', Validators.required],
       position: ['', Validators.required],
       email: ['', [Validators.required,  Validators.email]],
       skype: ['', Validators.required],
       phone: ['', Validators.required],
+      photo: []
     });
     this.loadSource();
   }
@@ -53,6 +55,19 @@ export class BusinessAgentComponent implements OnInit {
 
   public doFilter = (value: string) => {
     this.source.filter = value.trim().toLocaleLowerCase();
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader: FileReader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = ( event : any) => { // called once readAsDataURL is completed
+        this.agentRecord.photo = event.target.result;
+
+      };
+    }
   }
 
   public add() {
@@ -97,8 +112,10 @@ export class BusinessAgentComponent implements OnInit {
         position: data.position,
         email: data.email,
         skype: data.skype,
-        phone: data.phone
+        phone: data.phone,
+        photo: data.photo
       });
+      this.agentRecord.photo = data.photo;
     });
     this.actionAgent = 'Update Business Agent';
     this.nVista = 1;

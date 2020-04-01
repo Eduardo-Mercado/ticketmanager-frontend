@@ -3,7 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LayoutComponent} from './shared/layout/layout.component';
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: './modules/login/login.module#LoginModule'
+  },
+  {
   path: '',
   component: LayoutComponent,
    children: [
@@ -19,6 +29,10 @@ const routes: Routes = [{
     {
       path: 'catalog',
       loadChildren: './modules/catalog/catalog.module#CatalogModule'
+    },
+    {
+      path: 'security',
+      loadChildren: './modules/security/security.module#SecurityModule'
     }
    ]
 }];

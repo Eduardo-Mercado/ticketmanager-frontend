@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OptionApp } from 'src/app/core/models/Seguridad/menu.model';
+import { OptionApp } from 'src/app/core/models/security/menu.model';
 
 @Component({
   selector: 'app-aside',
@@ -23,6 +23,7 @@ export class AsideComponent implements OnInit {
     this.options.push( new OptionApp(3, 'Company', '/catalog', 'business'));
     this.options.push( new OptionApp(4, 'Agent', '/catalog/agent', 'perm_identity'));
     this.options.push( new OptionApp(5, 'Customer', '/catalog/customer', 'people'));
+    this.options.push( new OptionApp(5, 'Users', '/security', 'people'));
   }
 
   public getItemSelected(index: number) {

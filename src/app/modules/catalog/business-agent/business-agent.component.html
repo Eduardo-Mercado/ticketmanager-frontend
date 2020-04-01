@@ -52,25 +52,36 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card *ngIf="nVista == 1">
+<mat-card *ngIf="nVista == 1" style="width: 100vh;">
   <mat-card-header>
-    <h5 class="card-header">{{actionAgent}}</h5>
+    <h2 class="card-header">{{actionAgent}}</h2>
   </mat-card-header>
   <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <div fxLayout="column" class="row">
-        <mat-form-field fxFlex>
-            <input matInput placeholder="Full Name" [formControl]="agentForm.controls.name">
-            <mat-error *ngIf="agentForm.controls.name.hasError('name') && !agentForm.hasError('required')">
-                Full name error
+        <div class="column" (click)="file.click()">
+          <div class="contenedorImg">
+            <legend>click to upload image</legend>
+            <img class="img-profile" [src]="agentRecord.photo"> <br/>
+            <input id="imgProfile" style="display: none;" type='file' (change)="onSelectFile($event)" #file accept="image/x-png,image/gif,image/jpeg">
+            <mat-error *ngIf="submitted && agentForm.controls.photo.errors" class="invalid-feedback">
+              Profile photo is <strong>required</strong>
             </mat-error>
-            <mat-error *ngIf="submitted && agentForm.controls.name.errors" class="invalid-feedback">
-                Full Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
-      </div>
+          </div>
+        </div>
 
-      <div fxLayout="column" class="row">
+        <div class="column">
+          <mat-form-field fxFlex>
+              <input matInput placeholder="Full Name" [formControl]="agentForm.controls.name">
+              <mat-error *ngIf="agentForm.controls.name.hasError('name') && !agentForm.hasError('required')">
+                  Full name error
+              </mat-error>
+              <mat-error *ngIf="submitted && agentForm.controls.name.errors" class="invalid-feedback">
+                  Full Name is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
+
+
         <mat-form-field fxFlex>
             <input matInput placeholder="Position" [formControl]="agentForm.controls.position">
             <mat-error *ngIf="agentForm.controls.position.hasError('position') && !agentForm.hasError('required')">
@@ -80,9 +91,7 @@
                 Position is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-      </div>
 
-      <div fxLayout="column" class="row">
         <mat-form-field fxFlex>
             <input matInput placeholder="E-mail" [formControl]="agentForm.controls.email">
             <mat-error *ngIf="agentForm.controls.email.hasError('email') && !agentForm.hasError('required')">
@@ -92,8 +101,7 @@
                 Email is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-      </div>
-      <div fxLayout="column" class="row">
+
         <mat-form-field fxFlex>
             <input matInput placeholder="User Skype" [formControl]="agentForm.controls.skype">
             <mat-error *ngIf="agentForm.controls.skype.hasError('skype') && !agentForm.hasError('required')">
@@ -103,8 +111,6 @@
                 User Skype is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-      </div>
-      <div fxLayout="column" class="row">
         <mat-form-field fxFlex>
             <input matInput placeholder="Phone Number" [formControl]="agentForm.controls.phone">
             <mat-error *ngIf="agentForm.controls.phone.hasError('phone') && !agentForm.hasError('required')">
@@ -114,6 +120,7 @@
                 Phone number is <strong>required</strong>
             </mat-error>
         </mat-form-field>
+      </div>
       </div>
     </mat-card-content>
           <mat-card-actions fxlayout="row" fxlayoutalign="end center" fxlayoutgap="8px">
