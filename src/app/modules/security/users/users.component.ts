@@ -79,6 +79,8 @@ export class UsersComponent implements OnInit {
     this.userRecord.userName = this.userForm.controls.username.value;
     this.userRecord.passwd = this.userForm.controls.passwd.value;
     this.userRecord.idRol = this.userForm.controls.idRol.value;
+    this.userRecord.idAgent = this.userForm.controls.idAgent.value;
+
     if ( this.userRecord.id === 0) {
 
       this.service.create(this.userRecord).subscribe((data: UserItem) => {
@@ -123,7 +125,7 @@ export class UsersComponent implements OnInit {
         username : data.userName,
         passwd: data.passwd,
         idRol: data.idRol,
-        idAgent: data.IdAgent
+        idAgent: data.idAgent
       });
       this.action = 'Update User';
       this.modalService.open(form);

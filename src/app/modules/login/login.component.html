@@ -8,17 +8,23 @@
       <img src="../../../assets/img/ticket.jpg">
       <h1>Ticket Manager</h1>
     </div>
-    <form>
+    <form [formGroup]="loginForm">
       <div fxLayout="column" class="row">
         <mat-form-field class="column">
           <mat-label>UserName</mat-label>
-          <input matInput>
+          <input matInput  formControlName="username">
+          <mat-error *ngIf="loginForm.controls.username.hasError('required')" class="invalid-feedback">
+            User Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="column" class="row">
         <mat-form-field class="column">
           <mat-label>Password</mat-label>
-          <input matInput>
+          <input matInput formControlName="password">
+          <mat-error *ngIf="loginForm.controls.password.hasError('required')" class="invalid-feedback">
+            Password is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="action">

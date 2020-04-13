@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OptionApp } from 'src/app/core/models/security/menu.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aside',
@@ -10,7 +11,7 @@ export class AsideComponent implements OnInit {
 
   public options: OptionApp[] = [];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.GetOptions();
@@ -34,4 +35,8 @@ export class AsideComponent implements OnInit {
     this.options[index].nameCssClass = 'sidebar-item-active';
   }
 
+  public logOut() {
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
 }

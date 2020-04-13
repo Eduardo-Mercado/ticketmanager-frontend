@@ -1,0 +1,123 @@
+
+li.task {
+  border: 1px solid rgba(0,0,0,0.07);
+  margin-bottom: 2vh;
+  padding: 1vh;
+  -webkit-box-shadow: 0px 2px 24px -28px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 2px 24px -28px rgba(0,0,0,0.75);
+box-shadow:0px 2px 24px -28px rgba(0,0,0,0.75);
+
+  div.header-task {
+    display: flex;
+    h5 {
+       margin: 0.5vh;
+      width: 100%;
+       small {
+         float:right;
+         font-weight: 400 !important;
+       }
+      }
+  }
+  ol.task-list{
+    list-style: none;
+    padding-left: 8vh;
+  }
+}
+
+form {
+  div.row {
+
+    div.column {
+      padding: 0;
+      width: 28%;
+    }
+
+    div.column:not(:last-child) {
+      padding-right: 2.76vh;
+    }
+  }
+}
+
+ol.subTask {
+  li {
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 0.5vh;
+    // background-color: #929ecc6b;
+    margin: 0.5vh 0 0.5vh 0;
+  }
+  span:hover {
+    cursor: pointer;
+  }
+}
+
+div.action-subtask > button {
+  margin-right: 2.5vh;
+}
+ li.task-view {
+   background-color: #ffffff;
+    div {
+      display: block;
+      height: 9vh;
+      span.flag {
+        background-color: #1d569b;
+        color: #ffffff;
+        padding: 0.2vh;
+        float: right;
+        font-size: 11px;
+      }
+    }
+ }
+
+ div.timeline {
+  margin-bottom: 25px;
+  margin-top: 5px;
+  position: relative;
+  clear: both;
+
+  div.timeline-icon {
+      float: left;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      width: 40px;
+      margin-top: 1vh;
+      background-color: #ffb300;
+  }
+  div.timeline-body {
+    box-shadow: none;
+    border: 0;
+    background-color: #f3f5f9;
+    margin-left: 6vh;
+    // min-height: 7vh;
+    height: auto;
+    border-radius: 5px;
+    padding: 0.8vh;
+    color: #37405f;
+    display: flow-root;
+    span.flag {
+      background-color: #1d569b;
+      color: #ffffff;
+      padding: 0.2vh;
+      float: right;
+      font-size: 11px;
+    }
+  }
+
+  div.timeline-body::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    top: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #f3f5f9;
+    margin: 2vh 0 0 5vh;
+  }
+}

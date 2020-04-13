@@ -14,8 +14,8 @@ export class UserService {
 
   }
 
-  signIn(): Observable<any> {
-     return this.http.get<any>(this.Url + '/signIn');
+  signIn(data: User): Observable<any> {
+     return this.http.get<any>(this.Url + '/' + data.userName + '/' + data.passwd);
   }
 
   getUsers(): Observable<UserItem[]>{

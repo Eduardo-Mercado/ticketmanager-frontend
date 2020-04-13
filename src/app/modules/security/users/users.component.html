@@ -89,7 +89,7 @@
           </div>
           <div class="column" >
             <mat-form-field fxFlex>
-              <input matInput placeholder="Password" formControlName="passwd" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+              <input matInput placeholder="Password" formControlName="passwd" [ngClass]="{ 'is-invalid': submitted && userForm.controls.passwd.errors }">
               <mat-error *ngIf="userForm.controls.passwd.hasError('minlength')">
                   Password must be at least 6 characters
                 </mat-error>
@@ -100,7 +100,7 @@
           </div>
           <div class="column" >
             <mat-form-field fxFlex>
-                <input matInput placeholder="Confirm Password" type="password" formControlName="confirmPasswd" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <input matInput placeholder="Confirm Password" type="password" formControlName="confirmPasswd" [ngClass]="{ 'is-invalid': submitted && userForm.controls.confirmPasswd.errors }">
                 <mat-error *ngIf="userForm.controls.confirmPasswd.hasError('mustMatch')">
                     Passwords must match
                   </mat-error>

@@ -4,7 +4,7 @@ export class User {
   passwd: string;
   confirmPasswd: string;
   idRol: number;
-  IdAgent: number;
+  idAgent: number;
 }
 
 export class UserItem {

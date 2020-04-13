@@ -15,6 +15,7 @@ import { AsideComponent } from './shared/layout/aside/aside.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandler } from './core/helpers/error_handler/global-error-handler';
 import { ServerErrorInterceptor } from './core/helpers/error_handler/server-error.interceptor';
+import { AuthInterceptorService } from './core/helpers/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ServerErrorInterceptor } from './core/helpers/error_handler/server-erro
     HttpClientModule
   ],
   providers: [ { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

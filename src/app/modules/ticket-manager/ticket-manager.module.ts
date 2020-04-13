@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TicketComponent } from './ticket/ticket.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
-  declarations: [TicketComponent, TicketViewComponent],
+  declarations: [TicketComponent, TicketViewComponent, TaskComponent],
   imports: [
     CommonModule,
     TicketManagerRoutingModule,

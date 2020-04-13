@@ -109,4 +109,7 @@ body {
   color: rgba(0, 0, 0, 0.87);
 }
 
+button.mat-primary{
+  background-color: #2f3a77 !important;
+}
 @import "~ng-pick-datetime/assets/style/picker.min.css";
