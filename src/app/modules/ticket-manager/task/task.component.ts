@@ -24,10 +24,12 @@ export class TaskComponent implements OnInit {
   writeSubTask: boolean;
   listSubTask: Subtask[] = [];
   task: Task;
-  esfuerzo = '0  days 0 hours 0 minutes';
-
+  esfuerzo = '';
+  listTask: Subtask[] = [];
+  titleActionTask = 'Add';
   constructor(private formBuildSubTask: FormBuilder, private formBuildTask: FormBuilder,
               private dropdownServ: DropdownService, private taskServ: TaskService) {
+
     this.formSubTask = this.formBuildSubTask.group({
       description: ['', Validators.required],
       typeTask: ['', Validators.required],
@@ -48,7 +50,13 @@ export class TaskComponent implements OnInit {
     this.listSubTask = [];
     this.task = new Task();
     this.task.subTasks = this.listSubTask;
-
+    this.taskServ.getTaskbyIdTicket(this.idTicket).subscribe((data: Subtask[]) => {
+       this.listTask = data;
+       this.esfuerzo = new DateFunction().get_TimeInverted( this.listTask.reduce((sum, current) => sum + current.time, 0));
+       this.listTask.forEach(element => {
+        element.typeText = new DateFunction().get_TimeInverted(element.time);
+      });
+    });
     this.dropdownServ.getDropdownByTable('typeTask').subscribe((data: Dropdown[]) => { this.listtype = data; });
   }
 
@@ -72,10 +80,10 @@ export class TaskComponent implements OnInit {
       item.type = this.formSubTask.controls.typeTask.value;
       item.started = this.formSubTask.controls.start.value;
       item.finished = this.formSubTask.controls.finish.value;
-      item.id = ( this.listSubTask.length === 0 ) ? 1 : this.listSubTask[this.listSubTask.length - 1 ].id + 1;
+      item.index = ( this.listSubTask.length === 0 ) ? 1 : this.listSubTask[this.listSubTask.length - 1 ].id + 1;
       item.time = Math.abs((item.finished.getTime() - item.started.getTime()) / 1000 );
-      item.typeText = this.listtype.filter( v => v.id === item.id)[0].value;
-      item.status = 1;
+      item.id = 0;
+      item.idTicket = this.idTicket;
       this.listSubTask.push(item);
       this.formSubTask.reset();
       this.writeSubTask = false;
@@ -94,6 +102,7 @@ export class TaskComponent implements OnInit {
     this.formTask.reset();
     this.listSubTask = [];
     this.vista = 0;
+    this.titleActionTask = 'Add';
   }
 
   registerTask() {
@@ -106,5 +115,23 @@ export class TaskComponent implements OnInit {
         console.log(data);
       });
     }
+  }
+
+  editTask(index: number) {
+    this.titleActionTask = 'update';
+    this.subTaskSelected = index;
+    this.task.id = this.listTask[this.subTaskSelected].id;
+    this.task.mainDescription = this.listTask[this.subTaskSelected].description;
+    this.task.edit = true;
+    this.formTask.setValue({description : this.task.mainDescription});
+    this.taskServ.getTicketByIdParent(this.task.id).subscribe((data: Subtask[]) => {
+      this.listSubTask = data;
+      this.esfuerzo = new DateFunction().get_TimeInverted( this.listSubTask.reduce((sum, current) => sum + current.time, 0));
+      this.vista = 1;
+    });
+  }
+
+  deleteTask(index: number) {
+    this.listSubTask[index].isdeleted = true;
   }
 }

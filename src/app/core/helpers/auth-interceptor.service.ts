@@ -12,11 +12,14 @@ export class AuthInterceptorService  implements HttpInterceptor {
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>  {
      console.log('Interceptor in progress');
      const token: string = localStorage.getItem('token');
-    //  req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
      req = req.clone({ headers: req.headers.set('Authorization', token) });
-     req = req.clone({ headers: req.headers.set('Content-Type', 'application/json')});
-     req = req.clone({ headers: req.headers.set('Accept', 'application/json')});
 
+     if ( req.url.includes('/api/file/download/')) {
+      req = req.clone({ responseType: 'blob'});
+     } else {
+      req = req.clone({ headers: req.headers.set('Content-Type', 'application/json')});
+      req = req.clone({ headers: req.headers.set('Accept', 'application/json')});
+     }
      return next.handle(req)
                 .pipe(
                   catchError((error: HttpErrorResponse) => {

@@ -42,3 +42,10 @@ export class TicketAgent {
   cssClass: string;
   idTicket: number;
 }
+
+
+export class TicketResolved {
+  description: string;
+  idAgent: number;
+  idTicket: number;
+}

@@ -17,4 +17,12 @@ export class TaskService {
   create(record: Task): Observable<Subtask> {
      return this.http.post<Subtask>(this.Url, record);
   }
+
+  getTaskbyIdTicket(id: number): Observable<Subtask[]> {
+     return this.http.get<Subtask[]>(this.Url + '/ticket/' + id);
+  }
+
+  getTicketByIdParent(id: number): Observable<Subtask[]> {
+     return this.http.get<Subtask[]>(this.Url + '/' + id);
+  }
 }

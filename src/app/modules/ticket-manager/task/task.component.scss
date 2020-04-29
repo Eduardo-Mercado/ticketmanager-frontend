@@ -9,6 +9,12 @@ box-shadow:0px 2px 24px -28px rgba(0,0,0,0.75);
 
   div.header-task {
     display: flex;
+    width: 92%;
+    div {
+      p {
+        margin: 0 0 0 3vh;
+      }
+    }
     h5 {
        margin: 0.5vh;
       width: 100%;
@@ -119,5 +125,57 @@ div.action-subtask > button {
     border-bottom: 9px solid transparent;
     border-right: 9px solid #f3f5f9;
     margin: 2vh 0 0 5vh;
+  }
+}
+
+
+.action-btn-wrapper {
+  position: relative;
+  display: flex;
+  li {
+    list-style: none;
+    display: table-cell;
+    padding: 0 1vh 0 1vh;
+  }
+}
+
+.fixed-action-btn.my-custom-btn {
+    display: inline-flex;
+    // background: #1f4fd7;
+    // border: 1px solid #ccd7ff;
+    border-radius: 25px;
+    // button {
+    //   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    //   border-radius: 50px;
+    // }
+}
+
+
+#float-menu {
+  visibility: hidden;
+  right: 6vh;
+  position: absolute;
+ }
+ #float-btn:active + #float-menu,
+ #float-btn:focus + #float-menu {
+    visibility: visible ;
+ }
+
+ #float-menu:hover {
+   visibility: visible ;
+ }
+
+span.btndelete {
+  position: absolute;
+  top: 0px;
+  visibility: hidden;
+}
+
+.timeline-body:hover {
+  span.btndelete {
+    position: absolute;
+    top: 0px;
+    visibility: visible;
+    cursor: pointer;
   }
 }

@@ -5,32 +5,33 @@
     <button class="btn btn-primary mr-1" (click)="openform()" mat-raised-button color="primary">Add Task</button>
   </div>
   <div style="width: 80%;">
-    <label style="float: right;">Esfuerzo Estimado : 2hrs y 30 mins</label>
+    <label style="float: right;"> {{esfuerzo}}</label>
   </div>
 </div>
 <div class="row">
       <ul style="list-style: none;width: 100%;margin-left: -5vh;">
-        <li class="task">
+        <li class="task" *ngFor="let items of listTask  let i = index" style="display: flex;">
           <div class="header-task">
-            <span><mat-icon>check_circle_outline</mat-icon></span> <h5>Prepare Keyword List  | <small> Fecha: 03/04/2020  Hora: 08:30 A.M - 10:45 AM</small></h5>
-
+            <span><mat-icon>check_circle_outline</mat-icon></span>
+            <div>
+              <h5> {{items.description}} </h5>
+              <p> <small> Date : {{items.started | date:'medium' }}  to {{items.finished | date:'medium'}} </small> </p>
+              <p> Total time : {{items.typeText}} </p>
+            </div>
           </div>
-          <ol class="task-list">
-            <li>Task specific 1</li>
-            <li>Task specific 2</li>
-            <li>Task specific 3</li>
-          </ol>
-        </li>
-        <li class="task">
-          <div class="header-task">
-            <span><mat-icon>check_circle_outline</mat-icon></span><h5> Installing tracking codes on the company website | <small> Fecha: 04/04/2020  Hora: 08:30 A.M - 10:45 AM</small></h5>
-
-          </div>
-          <ol class="task-list">
-            <li>Task specific 1</li>
-            <li>Task specific 2</li>
-            <li>Task specific 3</li>
-          </ol>
+          <div class="task-action">
+            <div class="action-btn-wrapper">
+              <div class="fixed-action-btn my-custom-btn horizontal">
+                <button mat-icon-button id="float-btn">
+                  <mat-icon>more_horiz</mat-icon>
+                  </button>
+                <ul id="float-menu">
+                  <li><a><button mat-icon-button><mat-icon>delete</mat-icon></button></a></li>
+                  <li><a><button mat-icon-button (click)="editTask(i)"><mat-icon>create</mat-icon></button></a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
         </li>
       </ul>
   </div>
@@ -83,61 +84,63 @@
       </div>
     </li>
   </ol>
-      <div *ngFor="let item of listSubTask">
+      <div *ngFor="let item of listSubTask let i = index">
 
-        <div class="timeline" *ngIf="!item.selected">
-          <div class="timeline-icon">
-            <!-- <mat-icon>done</mat-icon>  -->
-            {{item.id}}
-          </div>
-          <div class="timeline-body">
-            <p>
-              <span> {{item.description }} </span> <span class="flag">{{item.typeText}}</span>
-            </p>
-
-            <p>
-              <span style="float: left;"><mat-icon>alarm</mat-icon> {{item.started | date:'medium'}} </span>
-              <span style="float: right;"><mat-icon>alarm</mat-icon> {{item.finished | date:'medium'}} </span>
-            </p>
-          </div>
-        </div>
-
-        <div *ngIf="item.selected">
-          <div class="field-subtask">
-            <mat-form-field  class="row">
-              <input type="text" matInput placeholder="description" rows="2">
-            </mat-form-field>
-         <div class="row">
-           <div class="column">
-             <mat-form-field>
-               <mat-select placeholder="Type Task">
-               <mat-option>Control</mat-option>
-               <mat-option>Debugger</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="column">
-            <mat-form-field>
-              <input matInput [owlDateTime]="dt1"   [owlDateTimeTrigger]="dt1" placeholder="Date Time Init">
-               <owl-date-time  #dt1></owl-date-time>
-              </mat-form-field>
+          <div class="timeline" *ngIf="!item.isdeleted">
+            <div class="timeline-icon">
+              <!-- <mat-icon>done</mat-icon>  -->
+              {{item.index}}
             </div>
-           <div class="column">
-             <mat-form-field>
-               <input matInput [owlDateTime]="dt2"   [owlDateTimeTrigger]="dt2" placeholder="Date Time Finish">
-               <owl-date-time  #dt2></owl-date-time>
-              </mat-form-field>
+            <div class="timeline-body">
+              <p>
+                <span> {{item.description }} </span> <span class="flag">{{item.typeText}}</span>
+              </p>
+              <span class="btndelete" (click)="deleteTask(i)"><mat-icon>delete</mat-icon></span>
+              <p>
+                <span style="float: left;"><mat-icon>alarm</mat-icon> {{item.started | date:'medium'}} </span>
+                <span style="float: right;"><mat-icon>alarm</mat-icon> {{item.finished | date:'medium'}} </span>
+              </p>
+
             </div>
           </div>
-        </div>
-        <div class="action-subtask">
-          <button class="btn btn-primary mr-1" (click)="registerSubTask()" mat-raised-button color="primary">Add</button>
-          <button class="btn btn-secondary" mat-raised-button type="reset" (click)="cancelSubTask()">Cancel</button>
-        </div>
-      </div>
+
+          <!-- <div *ngIf="item.selected">
+            <div class="field-subtask">
+              <mat-form-field  class="row">
+                <input type="text" matInput placeholder="description" rows="2">
+              </mat-form-field>
+          <div class="row">
+            <div class="column">
+              <mat-form-field>
+                <mat-select placeholder="Type Task">
+                <mat-option>Control</mat-option>
+                <mat-option>Debugger</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field>
+                <input matInput [owlDateTime]="dt1"   [owlDateTimeTrigger]="dt1" placeholder="Date Time Init">
+                <owl-date-time  #dt1></owl-date-time>
+                </mat-form-field>
+              </div>
+            <div class="column">
+              <mat-form-field>
+                <input matInput [owlDateTime]="dt2"   [owlDateTimeTrigger]="dt2" placeholder="Date Time Finish">
+                <owl-date-time  #dt2></owl-date-time>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="action-subtask">
+            <button class="btn btn-primary mr-1" (click)="registerSubTask()" mat-raised-button color="primary">Add</button>
+            <button class="btn btn-secondary" mat-raised-button type="reset" (click)="cancelSubTask()">Cancel</button>
+          </div>
+          </div> -->
+
     </div>
   <div class="action-task">
-    <button class="btn btn-primary mr-1" (click)="registerTask()" mat-raised-button color="primary">Add</button>
+    <button class="btn btn-primary mr-1" (click)="registerTask()" mat-raised-button color="primary">{{titleActionTask}}</button>
     <button class="btn btn-secondary" mat-raised-button type="reset" (click)="cancelTask()">Cancel</button>
   </div>
 </form>

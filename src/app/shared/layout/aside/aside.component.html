@@ -9,49 +9,30 @@
         <img  class="user-image" src="../assets/img/man-avatar.png">
   </div>
     </div>
-    <p>Eduardo Mercado</p>
-    <small>eduardo.mercado@juegaok.com</small>
+    <p>{{userInfo.name}}</p>
+    <!-- <small>eduardo.mercado@juegaok.com</small> -->
     <small>Analista-Programador</small>
 </div>
 
 <div class="menu">
-  <ul>
-    <li>
+    <h5>
+      <span class="title"> Menu</span>
+    </h5>
+
+    <div *ngFor="let item of options">
     <a>
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-    </a>
-  </li>
-  <li>
-    <span class="title"> Seguridad</span>
-  </li>
-   <li> <a>
-        <mat-icon>lock</mat-icon>
-        <span>Usuario</span>
-    </a>
-  </li>
-  <li>
-    <a>
-        <mat-icon>lock</mat-icon>
-        <span>Roles</span>
-    </a>
-  </li>
-  <li>
-    <a routerLink="/Seguridad">
-        <mat-icon>lock</mat-icon>
-        <span>Opciones</span>
-    </a>
-  </li>
-  <li>
-    <span class="title"> Menu</span>
-  </li>
-  <li  *ngFor="let item of options let i = index" (click)="getItemSelected(i)"  class="{{item.nameCssClass}}">
-      <a routerLink="{{item.path}}" >
         <mat-icon>{{item.icon}}</mat-icon>
         <span>{{item.name}}</span>
-      </a>
-  </li>
-  </ul>
+    </a>
+    <ul>
+      <li  *ngFor="let node of item.nodes" (click)="getItemSelected(node.idOption)"  class="{{node.nameCssClass}}">
+        <a routerLink="{{node.path}}" >
+          <mat-icon>{{node.icon}}</mat-icon>
+          <span>{{node.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="chat-container">

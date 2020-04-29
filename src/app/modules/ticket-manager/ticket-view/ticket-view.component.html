@@ -1,35 +1,47 @@
 <mat-card>
   <mat-card-title>
-    <h3><mat-icon>assignment</mat-icon> Tickets</h3>
+    <h3 style="margin: 0;"><mat-icon>assignment</mat-icon> Tickets</h3>
   </mat-card-title>
   <mat-card-content *ngIf="isready && nvista == 0">
     <div class="content-tasks">
-      <h4 style="text-align: left;"> <mat-icon>dns</mat-icon> Tickets <span style="float: right; cursor: pointer;"><mat-icon>sync</mat-icon></span></h4>
-      <ol>
-        <li *ngFor="let item of listTickets  let i = index" (click)="getInformationTicket(i)">
-          <div class="{{item.cssClass}}">
-                <div class="custom">
-                    <div class="custom-img">
-                      <img class="user-image" src="{{item.profile}}">
-                    </div>
-                    <div class="custom-info">
-                      <p><strong>{{item.customer}}</strong>  <br> {{item.company}} - {{item.position}} <br> <small>{{item.dateT | date:'medium'}}</small></p>
+      <h4 style="text-align: left; display: flex;">
+        <span><mat-icon>dns</mat-icon></span>
+        <span style="padding-top: 3px;"> Tickets </span>
+        <span style="cursor: pointer;margin-left: 72%;">
+          <mat-icon>sync</mat-icon>
+        </span>
+      </h4>
+     <div class="nano has-scrollbar" style="height:71vh;">
+        <div class="nano-content" tabindex="0" style="right:-17px;" (scroll)="scrollHandler($event)"  >
+          <ol>
+            <li *ngFor="let item of listTickets  let i = index" (click)="getInformationTicket(i)">
+              <div class="{{item.cssClass}}">
+                    <div class="custom">
+                        <div class="custom-img">
+                          <img class="user-image" src="{{item.profile}}">
+                        </div>
+                        <div class="custom-info">
+                          <p><strong>{{item.customer}}</strong>  <br> {{item.company}} - {{item.position}} <br> <small>{{item.dateT | date:'medium'}}</small></p>
 
+                        </div>
                     </div>
-                </div>
-                <blockquote>
-               {{item.subject}}
-                </blockquote>
-          </div>
-        </li>
-
-      </ol>
+                    <blockquote>
+                   {{item.subject}}
+                    </blockquote>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="nano-pane">
+          <div class="nano-slider" [ngStyle]="nanosliderCss"></div>
+        </div>
+     </div>
     </div>
     <div class="content-details">
-      <h4 style="text-align: left;"> <mat-icon>receipt</mat-icon> Detail</h4>
+      <h4 style="text-align: left; display: flex;"> <span><mat-icon>receipt</mat-icon></span> <span style="padding-top: 3px;"> Detail</span></h4>
 
       <div class="task-info"  *ngIf="showDetail">
-          <div class="task-userInfo">
+          <div class="task-userInfo" style="margin-bottom: 1vh;border-bottom: 1px solid #dddddd;">
               <div class="custom">
                   <div class="custom-img">
                     <img class="user-image" src="{{ticketSelected.profile}}">
@@ -63,18 +75,17 @@
               <label><strong>Subject :</strong></label>
               <p>{{ticketSelected.subject}}</p>
           </div>
-          <hr>
           <div class="task-info">
            <div [innerHTML]="ticketSelected.body"></div>
           </div>
 
-          <div style="background-color: #f1f6fbc7; border-radius: 5px;"  *ngIf="(listFiles.length > 0)">
+          <div style="border-top: 1px solid #ddd; border-radius: 5px;"  *ngIf="(listFiles.length > 0)">
             <h5 style="display: flex;">
               <mat-icon> attach_file</mat-icon>
               <span style="margin-top: 0.5vh;">  Attachment</span>
             </h5>
             <ul class="listFile">
-              <li *ngFor="let file of listFiles">
+              <li *ngFor="let file of listFiles" (click)="downloadFile(file.id)">
                 <img [src]="file.img" height="50">
                 <span id="file-label">{{file.name}} </span>
               </li>
@@ -86,7 +97,7 @@
       </div>
     </div>
     <div class="content-documents">
-      <h4  style="text-align: left;"> <mat-icon> attach_file</mat-icon> Contact</h4>
+      <h4  style="text-align: left; display: flex;"> <span><mat-icon> attach_file</mat-icon></span> <span style="padding-top: 3px;"> Contact </span></h4>
 
       <div class="task-info"  *ngIf="showDetail">
         <div class="task-userInfo">
@@ -97,9 +108,9 @@
                 <div class="custom-info">
                   <p><strong>{{ticketSelected.customer}}</strong> </p>
                   <p>{{ticketSelected.position}}</p>
-                  <p><mat-icon> mail_outline</mat-icon> usermail@company.com</p>
-                  <p><mat-icon>language</mat-icon> userskype</p>
-                  <p><mat-icon> phone</mat-icon> 505 - 99999999</p>
+                  <p style="display: flex;"><span> <mat-icon> mail_outline</mat-icon></span> <span style="padding-top: 3px;">usermail@company.com</span></p>
+                  <p style="display: flex;"><span><mat-icon>language</mat-icon></span> <span style="padding-top: 3px;">userskype</span></p>
+                  <p style="display: flex;"><span><mat-icon> phone</mat-icon></span> <span style="padding-top: 3px;">505-99999999</span></p>
                 </div>
             </div>
 
@@ -125,7 +136,7 @@
 
           <div class="row">
             <div style="margin-top: 2vh;">
-              <angular-editor  [config]="editorConfig"></angular-editor>
+              <angular-editor [(ngModel)]="resolve" [config]="editorConfig"></angular-editor>
             </div>
            </div>
            <div fxLayout="column" class="row">
@@ -136,7 +147,6 @@
             </div>
             <ul class="listFile">
               <li *ngFor="let file of files">
-                <!--<mat-progress-bar [value]="file.progress"></mat-progress-bar>  -->
                 <img [src]="file.img" height="50">
                 <span id="file-label">{{file.name}} </span>
               </li>
@@ -144,23 +154,12 @@
           </div>
         </div>
       <div class="column c1">
-          <!-- <mat-form-field>
-            <input matInput [owlDateTime]="dt1"   [owlDateTimeTrigger]="dt1" placeholder="Date Time Init">
-            <owl-date-time  #dt1></owl-date-time>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [owlDateTime]="dt2"   [owlDateTimeTrigger]="dt2" placeholder="Date Time Finish">
-            <owl-date-time  #dt2></owl-date-time>
-          </mat-form-field>
-          <mat-form-field >
-            <textarea matInput rows="3" placeholder="Comment"></textarea>
-          </mat-form-field> -->
-         <app-task [idTicket] = 1 ></app-task>
+         <app-task [idTicket] = "ticketSelected.idTicket" ></app-task>
       </div>
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button class="btn btn-primary mr-1" mat-raised-button color="primary">Save</button>
+    <button class="btn btn-primary mr-1" mat-raised-button color="primary" (click)="ResolveTicket()">Save</button>
     <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onBack()">Cancel</button>
   </mat-card-actions>
 </div>

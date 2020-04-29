@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketAgent, TicketFile } from 'src/app/core/models/ticket-manager/ticket.model';
+import { TicketAgent, TicketFile, TicketResolved } from 'src/app/core/models/ticket-manager/ticket.model';
 import { TicketService } from 'src/app/core/services/task-manager/ticket.service';
 import { IconFile } from 'src/app/core/helpers/IconFile';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { HttpEventType } from '@angular/common/http';
+import { UserService } from 'src/app/core/services/security/user.service';
+
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-ticket-view',
@@ -18,6 +22,8 @@ export class TicketViewComponent implements OnInit {
   showDetail: boolean;
   nvista: number;
   files: TicketFile[] = [];
+  ticketResolve: TicketResolved;
+  resolve = '';
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -64,11 +70,19 @@ export class TicketViewComponent implements OnInit {
       ['fontSize']
     ]
 };
-  constructor(private service: TicketService) { }
 
+nanosliderCss = {
+  height: '147px',
+  transform: 'translate(0px,0px)',
+  transition: 'transform 1s'
+};
+
+  constructor(private service: TicketService, private userService: UserService) { }
+  userInfo;
   ngOnInit() {
+    this.userInfo =  this.userService.getCurrentUser();
     this.nvista = 0;
-    this.service.getTicketsByAgent(0).subscribe((data: TicketAgent[]) => {
+    this.service.getTicketsByAgent(this.userInfo.id).subscribe((data: TicketAgent[]) => {
       this.listTickets = data;
       this.listTickets.forEach(element => {
         switch (element.priority){
@@ -149,4 +163,55 @@ export class TicketViewComponent implements OnInit {
                 this.files.push( temp );
         }
   }
+
+  downloadFile(id: number) {
+    this.service.downloadFile(id);
+  }
+
+  ResolveTicket() {
+    if (this.resolve.length === 0) {
+      alert('Should describe resolution');
+    }
+    this.ticketResolve = new TicketResolved();
+    this.ticketResolve.description = this.resolve;
+    this.ticketResolve.idAgent =  this.userInfo.id;
+    this.ticketResolve.idTicket = this.ticketSelected.idTicket;
+    this.service.resolveTicket(this.ticketResolve).subscribe((data: boolean) => {
+        if ( data) {
+          this.ngOnInit();
+        } else {
+          alert('there is something wrong :(');
+        }
+    });
+  }
+
+  private uploadFiles() {
+    if (this.files.length > 0 ) {
+      this.files.forEach(element => {
+        const formData = new FormData();
+        formData.append('name', element.name);
+        formData.append('type', element.type);
+        formData.append('idTicket', this.ticketSelected.idTicket.toString());
+        formData.append('fileUpload',  element.UploadFile);
+        formData.append('isResolved', '1');
+        this.service.uploadFiles(formData).subscribe(
+          event => {
+            if ( event.type === HttpEventType.UploadProgress) {
+            // this.fileUpload = Math.round((event.loaded / event.total) * 100);
+            } else if ( event.type === HttpEventType.Response) {
+              let response: any;
+              response = event.body;
+            }
+          }
+        );
+      });
+    }
+  }
+
+  @HostListener('scroll', ['$event'])
+      scrollHandler($event: any) {
+        // const scrollOffset = $event.srcElement.scrollTop;
+        console.log('scroll: ', $event.target.scrollTop);
+        this.nanosliderCss.transform = 'translate(0px,' + $event.target.scrollTop + 'px )';
+    }
 }

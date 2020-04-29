@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { Ticket, TicketIndex, TicketFile, TicketAgent } from '../../models/ticket-manager/ticket.model';
+import { Ticket, TicketIndex, TicketFile, TicketAgent, TicketResolved } from '../../models/ticket-manager/ticket.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,18 @@ export class TicketService {
     });
   }
 
+  downloadFile(id: number): void {
+     this.http.get(environment.baseUrl + '/file/download/' + id).subscribe(res => {
+       window.open(window.URL.createObjectURL(res));
+    });
+
+  }
+
   getTicketsByAgent(id: number): Observable<TicketAgent[]> {
     return this.http.get<TicketAgent[]>(this.Url + '/byAgent/' + id);
+  }
+
+  resolveTicket(record: TicketResolved): Observable<boolean> {
+     return this.http.post<boolean>(this.Url + '/resolve', record);
   }
 }

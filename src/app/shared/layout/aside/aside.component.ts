@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { OptionApp } from 'src/app/core/models/security/menu.model';
+import { OptionApp, Option } from 'src/app/core/models/security/menu.model';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/security/user.service';
+import { RolService } from 'src/app/core/services/security/rol.service';
 
 @Component({
   selector: 'app-aside',
@@ -10,29 +12,37 @@ import { Router } from '@angular/router';
 export class AsideComponent implements OnInit {
 
   public options: OptionApp[] = [];
-
-  constructor(private router: Router) { }
+  userInfo;
+  constructor(private router: Router, private userService: UserService, private rolS: RolService) { }
 
   ngOnInit() {
+    this.userInfo =  this.userService.getCurrentUser();
     this.GetOptions();
   }
 
   private GetOptions() {
-    this.options.push( new OptionApp(1, 'all Tickets', '/ticket', 'home'));
-    this.options.push( new OptionApp(1, 'My Tickets', '/ticket/view', 'home'));
-    this.options.push( new OptionApp(2, 'Dashboard', '/dashboard', 'dashboard'));
-    this.options.push( new OptionApp(3, 'Company', '/catalog', 'business'));
-    this.options.push( new OptionApp(4, 'Agent', '/catalog/agent', 'perm_identity'));
-    this.options.push( new OptionApp(5, 'Customer', '/catalog/customer', 'people'));
-    this.options.push( new OptionApp(5, 'Users', '/security', 'people'));
+    this.rolS.getoptionsByRol(this.userInfo.idRol).subscribe((data: OptionApp[]) => { this.options = data; });
   }
 
-  public getItemSelected(index: number) {
+  public getItemSelected(id: number) {
     this.options.forEach(element => {
-      element.nameCssClass = 'sidebar-item';
+      element.nodes.forEach(item => {
+        item.nameCssClass = 'sidebar-item';
+      });
     });
 
-    this.options[index].nameCssClass = 'sidebar-item-active';
+    this.options.forEach(element => {
+    //  const valor = element.nodes.filter( item => item.idOption === index);
+    //  if (valor) {
+    //     valor[0].nameCssClass = 'sidebar-item-active';
+    //   }
+    element.nodes.map( (obj: Option) => {
+       if (obj.idOption === id) {
+          obj.nameCssClass = 'sidebar-item-active';
+       }
+    });
+    });
+
   }
 
   public logOut() {
