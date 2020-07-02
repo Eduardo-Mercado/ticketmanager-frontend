@@ -14,8 +14,8 @@ export class TaskService {
   private Url = environment.baseUrl + '/task';
   constructor(private http: HttpClient) { }
 
-  create(record: Task): Observable<Subtask> {
-     return this.http.post<Subtask>(this.Url, record);
+  create(record: Task): Observable<boolean> {
+     return this.http.post<boolean>(this.Url, record);
   }
 
   getTaskbyIdTicket(id: number): Observable<Subtask[]> {

@@ -3,8 +3,6 @@
 app-modal-popup {
   /* modals are hidden by default */
   display: none;
-
-
 }
 
 body.modal-open {
@@ -31,7 +29,7 @@ body.modal-open {
       background: #fff0;
 
       /* margin exposes part of the modal background */
-      margin: 40px;
+      margin: 10vh;
   }
 }
 

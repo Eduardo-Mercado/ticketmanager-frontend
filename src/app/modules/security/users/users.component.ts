@@ -124,6 +124,7 @@ export class UsersComponent implements OnInit {
       this.userForm.setValue({
         username : data.userName,
         passwd: data.passwd,
+        confirmPasswd: data.confirmPasswd,
         idRol: data.idRol,
         idAgent: data.idAgent
       });

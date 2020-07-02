@@ -89,7 +89,7 @@
           </div>
           <div class="column" >
             <mat-form-field fxFlex>
-              <input matInput placeholder="Password" formControlName="passwd" [ngClass]="{ 'is-invalid': submitted && userForm.controls.passwd.errors }">
+              <input matInput placeholder="Password" type="password"  formControlName="passwd" [ngClass]="{ 'is-invalid': submitted && userForm.controls.passwd.errors }">
               <mat-error *ngIf="userForm.controls.passwd.hasError('minlength')">
                   Password must be at least 6 characters
                 </mat-error>

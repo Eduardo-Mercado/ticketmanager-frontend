@@ -50,14 +50,18 @@ export class TaskComponent implements OnInit {
     this.listSubTask = [];
     this.task = new Task();
     this.task.subTasks = this.listSubTask;
+    this.getlistTask();
+    this.dropdownServ.getDropdownByTable('typeTask').subscribe((data: Dropdown[]) => { this.listtype = data; });
+  }
+
+  private getlistTask() {
     this.taskServ.getTaskbyIdTicket(this.idTicket).subscribe((data: Subtask[]) => {
-       this.listTask = data;
-       this.esfuerzo = new DateFunction().get_TimeInverted( this.listTask.reduce((sum, current) => sum + current.time, 0));
-       this.listTask.forEach(element => {
+      this.listTask = data;
+      this.esfuerzo = new DateFunction().get_TimeInverted(this.listTask.reduce((sum, current) => sum + current.time, 0));
+      this.listTask.forEach(element => {
         element.typeText = new DateFunction().get_TimeInverted(element.time);
       });
     });
-    this.dropdownServ.getDropdownByTable('typeTask').subscribe((data: Dropdown[]) => { this.listtype = data; });
   }
 
   openform() {
@@ -73,7 +77,6 @@ export class TaskComponent implements OnInit {
     if (this.formSubTask.valid) {
 
       this.writeSubTask = false;
-      this.subTaskSelected = 0;
       const item = new Subtask();
 
       item.description = this.formSubTask.controls.description.value;
@@ -107,12 +110,17 @@ export class TaskComponent implements OnInit {
 
   registerTask() {
     if ( this.formTask.valid) {
-      this.vista = 0;
       this.task.mainDescription = this.formTask.controls.description.value;
       this.task.idTicket = this.idTicket;
       this.task.subTasks = this.listSubTask;
-      this.taskServ.create(this.task).subscribe((data: Subtask) => {
-        console.log(data);
+      if ( this.task.edit !== true) {
+        this.task.id = 0;
+      }
+      this.taskServ.create(this.task).subscribe((data: boolean) => {
+        if ( data) {
+          this.vista = 0;
+          this.getlistTask();
+        }
       });
     }
   }

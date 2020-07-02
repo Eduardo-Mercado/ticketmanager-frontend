@@ -33,7 +33,7 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
-    return this.http.get<User>(this.Url + '/' + id);
+    return this.http.get<User>(environment.baseUrl + '/user/' + id);
   }
 
   create(record: User): Observable<UserItem> {
@@ -41,7 +41,7 @@ export class UserService {
   }
 
   update(record: User): Observable<UserItem> {
-    return this.http.put<UserItem>(this.Url + '/' + record.id, record);
+    return this.http.put<UserItem>(environment.baseUrl + '/user/' + record.id, record);
   }
 
   delete(id: number): Observable<boolean> {

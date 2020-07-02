@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Ticket, TicketIndex, TicketFile } from 'src/app/core/models/ticket-manager/ticket.model';
+import { Ticket, TicketIndex, TicketFile, TicketAgent } from 'src/app/core/models/ticket-manager/ticket.model';
 import { TicketService  } from 'src/app/core/services/task-manager/ticket.service';
 import { Dropdown } from 'src/app/core/models/dropdown.model';
 import { DropdownService } from 'src/app/core/services/dropdown.service';
@@ -27,13 +27,13 @@ export class TicketComponent implements OnInit {
   source = new MatTableDataSource<TicketIndex>();
   ticketForm: FormGroup;
   ticketRecord: Ticket;
+  ticketSelected: TicketAgent;
   action = '';
   listTickets: TicketIndex[] = [];
   listAgent: Dropdown[] = [];
   listCustomer: Dropdown[] = [];
   listCompany: Dropdown[] = [];
   listPriority: Dropdown[] = [];
-
   editorConfig: AngularEditorConfig = {
     editable: true,
       spellcheck: true,
@@ -98,7 +98,6 @@ export class TicketComponent implements OnInit {
       idAgent: ['', Validators.required],
       idPriority: ['', Validators.required]
     });
-
     this.loadSource();
   }
 
@@ -108,8 +107,6 @@ export class TicketComponent implements OnInit {
       this.source.data = this.listTickets;
       this.source.sort = this.sort;
       setTimeout(() =>  this.source.paginator = this.paginator);
-     // this.isready = true;
-
       this.dropdownServ.getDropdownByTable('businessAgent').subscribe(( agents: Dropdown[]) => {
         this.listAgent = agents as Dropdown[];
         this.dropdownServ.getDropdownByTable('company').subscribe((companys: Dropdown[]) => {
@@ -134,6 +131,7 @@ export class TicketComponent implements OnInit {
    });
 
   }
+
   public onSubmit() {
     this.submitted = true;
     this.ticketRecord.subject = this.ticketForm.controls.subject.value;
@@ -177,11 +175,9 @@ export class TicketComponent implements OnInit {
         this.service.uploadFiles(formData).subscribe(
           event => {
             if ( event.type === HttpEventType.UploadProgress) {
-            // this.fileUpload = Math.round((event.loaded / event.total) * 100);
             } else if ( event.type === HttpEventType.Response) {
               let response: any;
               response = event.body;
-            // console.log(response.renameFile);
             }
           }
         );
@@ -259,8 +255,6 @@ export class TicketComponent implements OnInit {
 
     for (let i = 0; i < filesAmount; i++) {
                 const reader = new FileReader();
-              //
-              // event.target.result
                 const temp = new TicketFile();
                 temp.type = event.target.files[i].type;
                 temp.name = event.target.files[i].name;
@@ -278,5 +272,13 @@ export class TicketComponent implements OnInit {
 
                 this.files.push( temp );
         }
+  }
+
+  public composeMail(id: number) {
+    this.action = 'Close Ticket';
+    this.service.getTicketAgentByIdTicket(id).subscribe((data: TicketAgent) => {
+      this.nVista = 2;
+      this.ticketSelected = data;
+    });
   }
 }

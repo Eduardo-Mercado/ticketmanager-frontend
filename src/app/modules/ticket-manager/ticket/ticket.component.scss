@@ -16,6 +16,7 @@
 }
 .show {
   display: block;
+  background-color: white;
 }
 
 span.lbPriority {
@@ -39,4 +40,18 @@ span.lbPriority {
 
 .Media {
   background-color: #dfa915;
+}
+
+
+.custom {
+  margin-bottom: 15px;
+  .custom-img{
+    display: table-cell;
+    vertical-align: top;
+  }
+  .custom-info{
+    display: table-cell;
+    vertical-align: top;
+    p{padding: 0vh 0.2vh 0vh 1.2vh; margin: 1.2vh;}
+  }
 }

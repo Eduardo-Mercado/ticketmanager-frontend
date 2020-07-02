@@ -16,10 +16,12 @@ export class AuthInterceptorService  implements HttpInterceptor {
 
      if ( req.url.includes('/api/file/download/')) {
       req = req.clone({ responseType: 'blob'});
-     } else {
-      req = req.clone({ headers: req.headers.set('Content-Type', 'application/json')});
+     } else if (req.url.includes('/api/file')) {
       req = req.clone({ headers: req.headers.set('Accept', 'application/json')});
-     }
+     } else {
+        req = req.clone({ headers: req.headers.set('Content-Type', 'application/json')});
+        req = req.clone({ headers: req.headers.set('Accept', 'application/json')});
+      }
      return next.handle(req)
                 .pipe(
                   catchError((error: HttpErrorResponse) => {

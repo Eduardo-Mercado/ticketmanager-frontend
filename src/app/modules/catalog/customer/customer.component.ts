@@ -17,7 +17,7 @@ export class CustomerComponent implements OnInit {
   isready: boolean;
   submitted: boolean;
   nVista: number;
-  Columns: string[] = ['name', 'position', 'email', 'skype', 'phone', 'company', 'idCustomer'];
+  Columns: string[] = ['name', 'position', 'email', 'skype', 'phone', 'companyName', 'idCustomer'];
   source = new MatTableDataSource<Customer>();
   customerForm: FormGroup;
   customerRecord: Customer;
@@ -56,11 +56,11 @@ export class CustomerComponent implements OnInit {
       this.source.sort = this.sort;
       setTimeout(() =>  this.source.paginator = this.paginator);
       this.isready = true;
-      this.dropdownServ.getDropdownByTable('company').subscribe((data: Dropdown[]) => {
-          this.listCompany = data as Dropdown[];
-      });
     });
 
+    this.dropdownServ.getDropdownByTable('company').subscribe((info: Dropdown[]) => {
+        this.listCompany = info as Dropdown[];
+    });
   }
 
   public doFilter = (value: string) => {
@@ -108,12 +108,13 @@ export class CustomerComponent implements OnInit {
       this.service.update(this.customerRecord).subscribe((data: Customer) => {
         this.listAgents.map((item, i) => {
            if (item.idCustomer === data.idCustomer) {
+              console.log(this.listAgents[i] );
               this.listAgents[i] = data;
               this.listAgents[i].companyName = data.companyName;
+              this.source.data = this.listAgents;
+              this.onReset();
            }
         });
-        this.source.data = this.listAgents;
-        this.onReset();
       });
     }
    }

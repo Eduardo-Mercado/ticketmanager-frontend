@@ -1,5 +1,5 @@
 <!-- <mat-card  *ngIf="isready && nVista == 0"> -->
-  <mat-card [className]="(nVista != 0)? 'hidden': 'show'">
+  <mat-card [className]="(nVista != 0)? 'hidden': 'show mat-card ng-star-inserted'">
   <mat-card-header>
 
   </mat-card-header>
@@ -42,13 +42,16 @@
           <span class="lbPriority {{element.priority}}"> {{element.priority}} </span> </td>
       </ng-container>
       <ng-container matColumnDef="idTicket">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 12vh;"> Action </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15vh;"> Action </th>
         <td mat-cell *matCellDef="let element; let i = index">
         <button mat-icon-button>
           <mat-icon class="edit" (click)="edit( element.idTicket)">create</mat-icon>
         </button>
         <button mat-icon-button>
           <mat-icon class="delete" (click)="delete(element.idTicket, i)">delete_forever</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon class="mail" (click)="composeMail(element.idTicket)">contact_mail</mat-icon>
         </button>
         </td>
       </ng-container>
@@ -60,7 +63,7 @@
   </mat-card-content>
   </mat-card>
 
-  <mat-card [className]="(nVista == 1)? 'show': 'hidden'">
+  <mat-card [className]="(nVista == 1)? 'show mat-card ng-star-inserted': 'hidden'">
     <mat-card-header>
       <h3 class="card-header">{{action}}</h3>
     </mat-card-header>
@@ -136,7 +139,7 @@
         </div>
         <div fxLayout="column" class="row">
           <div class="row">
-            <button style="border: 1px solid #c0c0c0;" type="button" (click)="fileUpload.click()" mat-button> <mat-icon> attach_file </mat-icon> Add file</button>
+            <button style="border: 1px solid #c0c0c0; margin-left:2vh;" type="button" (click)="fileUpload.click()" mat-button> <mat-icon> attach_file </mat-icon> Add file</button>
             <input #fileUpload  style="display: none;" id="fileUpload" name="fileUpload" multiple="multiple"  type='file' (change)="onSelectFile($event)">
           </div>
           <ul class="listFile">
@@ -153,4 +156,47 @@
         <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onReset()">Cancel</button>
       </mat-card-actions>
     </form>
+  </mat-card>
+
+
+  <mat-card [className]="(nVista == 2)? 'show mat-card ng-star-inserted': 'hidden'">
+    <mat-card-header>
+      <h3 class="card-header">{{action}}</h3>
+    </mat-card-header>
+    <mat-card-content style="border-top: 1px solid #ddd; padding-top: 1vh;">
+      <div fxLayout="row" class="row" *ngIf="nVista == 2">
+        <div class="column c1">
+          <div class="custom">
+            <div class="custom-img">
+              <img class="user-image" style="max-height: 5rem; width: 5rem;" src="{{ticketSelected.profile}}">
+            </div>
+            <div class="custom-info">
+              <p><strong>{{ticketSelected.customer}}</strong> </p>
+              <p>{{ticketSelected.position}} at {{ticketSelected.company}} </p>
+            </div>
+            <div style="position: absolute;
+            margin-top: -9.5vh;
+            width: 96%;
+            text-align: end;">
+              <p><small>{{ticketSelected.dateT | date: 'medium' }}</small></p>
+            </div>
+            <p><strong>Subject :</strong> {{ticketSelected.subject}}</p>
+          </div>
+        </div>
+        <div class="row" style="border-top: 1px solid #ddd;">
+          <div style="margin-top: 2vh;">
+            <div [innerHTML]="ticketSelected.body"></div>
+          </div>
+         </div>
+         <div class="row" style="border-top: 1px solid #ddd;">
+          <div style="margin-top: 2vh; width: 100%;">
+            <angular-editor [config]="editorConfig"></angular-editor>
+          </div>
+         </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="btn btn-primary mr-1" mat-raised-button color="primary">Register and Send Email</button>
+        <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onReset()">Cancel</button>
+    </mat-card-actions>
   </mat-card>

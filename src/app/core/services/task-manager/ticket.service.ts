@@ -62,6 +62,9 @@ export class TicketService {
     return this.http.get<TicketAgent[]>(this.Url + '/byAgent/' + id);
   }
 
+  getTicketAgentByIdTicket(id: number): Observable<TicketAgent> {
+    return this.http.get<TicketAgent>(this.Url + '/AgentByTicketId/' + id);
+  }
   resolveTicket(record: TicketResolved): Observable<boolean> {
      return this.http.post<boolean>(this.Url + '/resolve', record);
   }

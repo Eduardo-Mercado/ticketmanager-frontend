@@ -133,5 +133,6 @@ export class BusinessAgentComponent implements OnInit {
     this.actionAgent = '';
     this.agentForm.reset();
     this.agentRecord = new BusinessAgent();
+    this.agentRecord.photo = '';
   }
 }

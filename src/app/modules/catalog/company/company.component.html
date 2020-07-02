@@ -34,30 +34,33 @@
     <tr mat-row *matRowDef="let row; columns: Columns;"></tr>
   </table>
 
-  <mat-paginator [pageSize]="2" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </mat-card-content>
 </mat-card>
 
 <app-modal-popup  id="companyForm">
 
-  <mat-card class="c6">
+  <mat-card style="width: 75vh; margin-left: 45vh; margin-top: 4vh;">
     <mat-card-header>
-      <h5 class="card-header">{{action}}</h5>
+      <h2 class="card-header">{{action}}</h2>
     </mat-card-header>
-<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <div fxLayout="column" class="row">
-        <mat-form-field fxFlex>
+        <div class="column">
+          <mat-form-field fxFlex>
             <input matInput placeholder="name" [formControl]="companyForm.controls.name">
             <mat-error *ngIf="companyForm.controls.name.hasError('email') && !companyForm.hasError('required')">
-                ex. JueagOk.SA
+              ex. JueagOk.SA
             </mat-error>
             <mat-error *ngIf="submitted && companyForm.controls.name.errors" class="invalid-feedback">
-                name is <strong>required</strong>
+              name is <strong>required</strong>
             </mat-error>
-        </mat-form-field>
+          </mat-form-field>
+        </div>
       </div>
       <div fxLayout="column" class="row">
+        <div class="column">
         <mat-form-field fxFlex>
           <input matInput placeholder="Logo" [formControl]="companyForm.controls.logo">
           <mat-error *ngIf="companyForm.controls.logo.hasError('email') && !companyForm.hasError('required')">
@@ -68,6 +71,7 @@
           </mat-error>
       </mat-form-field>
       </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions fxlayout="row" fxlayoutalign="end center" fxlayoutgap="8px">
@@ -75,7 +79,6 @@
         <button class="btn btn-secondary" mat-raised-button type="reset" (click)="onReset('companyForm')">Cancel</button>
     </mat-card-actions>
   </form>
-
   </mat-card>
 </app-modal-popup>
 
