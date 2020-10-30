@@ -9,78 +9,51 @@
         <div  class="vistaMes">
           <div class="mes">
             <div>
-              <button mat-icon-button style="float: left;margin-left: 2.2rem;" >
+              <button mat-icon-button style="float: left; " (click)="PreviewMonth_Event()" >
                 <mat-icon>keyboard_arrow_left</mat-icon>
               </button>
-                  <p> Enero 2020 </p>
+                  <p> {{this.labelCalendar}} </p>
 
-                  <button mat-icon-button style="float: left;margin-left: 2.2rem;" >
+                  <button mat-icon-button style="float: left;margin-left: 2.2rem;" (click)="NextMonth_Event()" >
                     <mat-icon>keyboard_arrow_right</mat-icon>
                   </button>
             </div>
             <div class="dateoption">
-              <button class="mat-button">Today</button>
-              <button class="mat-button">Current Month</button>
-              <button class="mat-button">Last Month</button>
+              <button class="mat-button" (click)="Today_Event()">Today</button>
+              <button class="mat-button" (click)="CurrentMonth_Event()">Current Month</button>
+              <button class="mat-button" (click)="LastMonth_Event()">Last Month</button>
             </div>
             <table>
               <thead>
                 <tr>
+                  <th>Dom</th>
                   <th> <span>Lun</span></th>
                   <th>Mar</th>
                   <th>Mier</th>
                   <th>Juev</th>
                   <th>Vier</th>
                   <th>Sab</th>
-                  <th>Dom</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><span>1</span></td>
-                  <td><span>2</span></td>
-                  <td><span class="event">3</span></td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>9</td>
-                  <td>10</td>
-                  <td>11</td>
-                  <td><span class="current">12</span> </td>
-                  <td>13</td>
-                  <td>14</td>
-                </tr>
-                <tr>
-                  <td>15</td>
-                  <td>16</td>
-                  <td>17</td>
-                  <td>18</td>
-                  <td>19</td>
-                  <td>20</td>
-                  <td>21</td>
-                </tr>
-                <tr>
-                  <td>22</td>
-                  <td>23</td>
-                  <td>24</td>
-                  <td>25</td>
-                  <td>26</td>
-                  <td>27</td>
-                  <td>28</td>
-                </tr>
-                <tr>
-                  <td>29</td>
-                  <td>30</td>
-                  <td>31</td>
-                  <td class="outMonth">1</td>
-                  <td class="outMonth">2</td>
-                  <td class="outMonth">3</td>
-                  <td class="outMonth">4</td>
-                </tr>
+             <tr>
+               <td *ngFor="let item of this.calendar.slice(0,7)" class="{{item.nameCssClass}}"> {{item.date | date: 'd'}} </td>
+             </tr>
+             <tr>
+              <td *ngFor="let item of this.calendar.slice(7,14)" class="{{item.nameCssClass}}">{{item.date | date: 'd'}} </td>
+            </tr>
+            <tr>
+              <td *ngFor="let item of this.calendar.slice(14,21)" class="{{item.nameCssClass}}">{{item.date | date: 'd'}} </td>
+            </tr>
+            <tr>
+              <td *ngFor="let item of this.calendar.slice(21,28)" class="{{item.nameCssClass}}"> {{item.date | date: 'd'}} </td>
+            </tr>
+            <tr>
+              <td *ngFor="let item of this.calendar.slice(28,35)" class="{{item.nameCssClass}}"> {{item.date | date: 'd'}}</td>
+            </tr>
+            <tr>
+              <td *ngFor="let item of this.calendar.slice(35,42)" class="{{item.nameCssClass}}"> {{item.date | date: 'd'}}</td>
+            </tr>
               </tbody>
             </table>
             </div>
